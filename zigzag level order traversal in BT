@@ -1,0 +1,73 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {
+        List<List<Integer>> list1=new LinkedList<List<Integer>>();
+        Queue<TreeNode> queue=new LinkedList<TreeNode>();
+         
+        zigzag(root,list1);
+        return list1;
+
+
+    }
+    public void zigzag(TreeNode root,List<List<Integer>> list1){
+        Stack<TreeNode> s1=new Stack<TreeNode>();
+        Stack<TreeNode> s2=new Stack<TreeNode>();
+
+        if(root==null){
+            return;
+        }
+        s1.push(root);
+
+        while(s1.isEmpty()==false || s2.isEmpty()==false){ //any of the stack should be non-empty
+            List<Integer> l1=new ArrayList<Integer>();
+            while(s1.isEmpty()==false){                  //if the s1 is non empty
+                TreeNode curr=s1.pop();                   //push to s2
+                if(curr.left!=null) s2.push(curr.left);   //first left
+                if(curr.right!=null) s2.push(curr.right);  //then right to have in order
+                l1.add(curr.val);
+            }
+            System.out.println(l1);
+            list1.add(l1);
+
+            if(!s1.isEmpty()==false && !s2.isEmpty()==false){
+                break;           //if both stacks dont have any elements means no further levels in bt
+            }
+
+            List<Integer> l2=new ArrayList<Integer>();
+
+            while(s2.isEmpty()==false){
+                TreeNode curr=s2.pop();
+                if(curr.right!=null) s1.push(curr.right);     //first right
+                if(curr.left!=null) s1.push(curr.left);        //then left
+                l2.add(curr.val);
+            }
+            System.out.println(l2);
+            list1.add(l2);
+
+            
+
+        }
+
+
+    }
+            
+     
+        
+
+        
+    
+}
